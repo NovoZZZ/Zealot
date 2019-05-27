@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".UI.Activity.mapActivity">
+    <item
+        android:id="@+id/loc_map"
+        android:title="定位地图" />
+    <item
+        android:id="@+id/parse_map"
+        android:title="解析地图" />
+    <item android:id="@+id/search_map"
+        android:title="搜索地图"/>
+    <item
+        android:id="@+id/nav_map"
+        android:title="导航地图" />
+</menu>
