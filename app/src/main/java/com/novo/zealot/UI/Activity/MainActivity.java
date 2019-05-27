@@ -34,25 +34,19 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_log:
-                    Log.d(TAG, "trying to call frgLog");
                     if(frgLog == null){
-                        Log.d(TAG, "trying to new frgLog");
                         frgLog = new LogFragment();
                     }
                     switchFragment(frgLog);
                     break;
                 case R.id.navigation_run:
-                    Log.d(TAG, "trying to call frgRun");
                     if (frgRun == null){
-                        Log.d(TAG, "trying to new frgRun");
                         frgRun = new RunFragment();
                     }
                     switchFragment(frgRun);
                     break;
                 case R.id.navigation_profile:
-                    Log.d(TAG, "trying to call frgProfile");
                     if (frgProfile == null){
-                        Log.d(TAG, "trying to new frgProfile");
                         frgProfile = new ProfileFragment();
                     }
                     switchFragment(frgProfile);
@@ -94,10 +88,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         if (fragment.isAdded()) {
-            Log.d(TAG, "this fragment is added");
             fm.beginTransaction().show(fragment).commit();
         } else {
-            Log.d(TAG,"new Fragment");
             fm.beginTransaction().add(R.id.fl_main, fragment).commit();
         }
     }

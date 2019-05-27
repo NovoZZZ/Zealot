@@ -23,15 +23,17 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center">
-                <TextView
+                <com.robinhood.ticker.TickerView
+                    android:id="@+id/tv_todayDistance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="40000"
+                    android:text="1000"
                     android:textSize="50dp"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="米"
+                    android:textColor="@android:color/black"
                     android:textSize="50dp"/>
 
             </LinearLayout>
@@ -45,6 +47,7 @@
             android:layout_weight="1"
             android:gravity="center">
             <ImageView
+                android:id="@+id/img_run"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_play_circle_filled_black_48dp" />

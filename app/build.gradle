@@ -46,4 +46,8 @@ dependencies {
     implementation 'com.amap.api:location:latest.integration'
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
+
+
+    //数据动态显示
+    implementation 'com.robinhood.ticker:ticker:2.0.1'
 }
