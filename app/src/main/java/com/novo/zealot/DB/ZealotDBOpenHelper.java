@@ -86,15 +86,14 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
 
         //若不输入日期，则返回全部数据
         if (queryDate == null) {
-            String sql = "select * from " + TABLE_NAME + " order by startTime asc";
+            String sql = "select * from " + TABLE_NAME + " order by startTime desc";
             cursor = db.rawQuery(sql, null);
         } else {
-            String sql = "select * from " + TABLE_NAME + " where date = ? order by startTime asc";
+            String sql = "select * from " + TABLE_NAME + " where date = ? order by startTime desc";
             cursor = db.rawQuery(sql, new String[]{queryDate});
         }
 
         if (cursor != null && cursor.getCount() > 0) {
-            Log.d(TAG, "共有 " + cursor.getCount() + " 条数据");
             while (cursor.moveToNext()) {
                 //提取数据
                 String uuid = cursor.getString(cursor.getColumnIndex("uuid"));

@@ -46,7 +46,6 @@ public class RunFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Log.d(TAG, "onCreateView()");
         View view = inflater.inflate(R.layout.fragment_run, container, false);
 
         //设置TickerView
@@ -71,19 +70,16 @@ public class RunFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.context = context;
-        Log.d(TAG, "onAttach()");
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(TAG, "onStart()");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        Log.d(TAG, "onResume()");
         String todayDate = DateUtil.getFormattedDate();
         List<RunRecord> results = GlobalUtil.getInstance().databaseHelper.queryRecord(todayDate);
 
@@ -102,7 +98,6 @@ public class RunFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause()");
     }
 
 
