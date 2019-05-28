@@ -50,4 +50,7 @@ dependencies {
 
     //数据动态显示
     implementation 'com.robinhood.ticker:ticker:2.0.1'
+
+    //debug查看数据库
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
 }

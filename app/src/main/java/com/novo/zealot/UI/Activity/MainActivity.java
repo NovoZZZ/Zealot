@@ -6,14 +6,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.widget.FrameLayout;
 
 import com.novo.zealot.R;
 import com.novo.zealot.UI.Fragment.LogFragment;
 import com.novo.zealot.UI.Fragment.ProfileFragment;
 import com.novo.zealot.UI.Fragment.RunFragment;
+import com.novo.zealot.Utils.GlobalUtil;
 
 import java.util.List;
 
@@ -67,12 +66,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         //BottomNavigationBar
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setSelectedItemId(R.id.navigation_run);
 
 
-
+        //设置Context
+        GlobalUtil.getInstance().setContext(getApplicationContext());
+        GlobalUtil.getInstance().mainActivity = this;
     }
 
 

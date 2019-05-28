@@ -32,7 +32,9 @@ import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
+import com.novo.zealot.Bean.RunRecord;
 import com.novo.zealot.R;
+import com.novo.zealot.Utils.GlobalUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -60,6 +62,8 @@ public class mapActivity extends Activity implements AMapLocationListener,
     LatLng lastLatLng,nowLatLng;
     //此次运动总距离
     float distanceThisTime = 0;
+    //平均速度
+    float avgSpeed = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -280,6 +284,18 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 amapLocation.getStreetNum();  // 街道门牌号信息
                 amapLocation.getCityCode();  // 城市编码
                 amapLocation.getAdCode();//地区编码
+                amapLocation.getGpsAccuracyStatus();//GPS状态
+
+                float nowSpeed = amapLocation.getSpeed();//获取速度
+
+                //计算平均速度，即 (当前速度+当前平均速度)/2
+                //若为第一次定位，则当前速度为平均速度
+                if (isFirstLoc){
+                    avgSpeed = nowSpeed;
+                }else{
+                    avgSpeed = (avgSpeed + nowSpeed)/2;
+                }
+
                 //如果不是第一次定位，则把上次定位信息传给lastLatLng
                 if (!isFirstLoc) {
                     lastLatLng = nowLatLng;
@@ -289,6 +305,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 //新位置
                 nowLatLng = new LatLng(latitude, longitude);
 
+                //当前时间
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 Date date = new Date(amapLocation.getTime());
                 String locTime = df.format(date);//定位时间
@@ -304,15 +321,17 @@ public class mapActivity extends Activity implements AMapLocationListener,
                                 .width(10)
                                 .color(Color.argb(255, 255, 0, 0)));
 
-                Toast.makeText(getApplicationContext(), locTime, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getApplicationContext(), locTime, Toast.LENGTH_SHORT).show();
 
 
                 //如果不是第一次定位，就计算距离
                 if(!isFirstLoc){
                     float tempDistance = AMapUtils.calculateLineDistance(nowLatLng,lastLatLng);
                     distanceThisTime += tempDistance;
-                    Toast.makeText(getApplicationContext(), "此次计算距离：" + tempDistance
-                            + " 此次运动总距离: " + distanceThisTime,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext()
+                            , "此次计算距离：" + tempDistance
+                            + " 此次运动总距离: " + distanceThisTime + " 速度：" + nowSpeed
+                            ,Toast.LENGTH_SHORT).show();
                 }
 
                 //将地图移动到定位点
@@ -324,7 +343,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                     aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
                     aMap.moveCamera(CameraUpdateFactory.changeTilt(0));
                     //获取定位信息
-                    StringBuffer buffer = new StringBuffer();
+                    StringBuilder buffer = new StringBuilder();
                     buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince()
                             + "" + amapLocation.getCity() + "" + amapLocation.getProvince()
                             + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet()
@@ -380,6 +399,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
         super.onDestroy();
         //在activity执行onDestroy时执行mapView.onDestroy()，销毁地图
         mapView.onDestroy();
+        mLocationClient.onDestroy();
     }
 
     @Override
@@ -402,7 +422,21 @@ public class mapActivity extends Activity implements AMapLocationListener,
     protected void onStop() {
         Log.d(TAG, "map onStop");
         super.onStop();
+        mLocationClient.stopLocation();
 
+        //将此次数据存入数据库
+        RunRecord runRecord = new RunRecord();
+        runRecord.setEndTime(new Date());
+        runRecord.setDistance(distanceThisTime);
+        runRecord.setDuration((int)((runRecord.getEndTime().getTime() - runRecord.getStartTime().getTime())/1000));
+        runRecord.setAvgSpeed(avgSpeed);
+        if (GlobalUtil.getInstance().databaseHelper.addRecord(runRecord)){
+            Log.d(TAG, "数据存储成功");
+            Toast.makeText(getApplicationContext(), "数据存储成功", Toast.LENGTH_SHORT).show();
+        }else{
+            Log.d(TAG, "数据存储失败");
+            Toast.makeText(getApplicationContext(), "数据记录失败", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

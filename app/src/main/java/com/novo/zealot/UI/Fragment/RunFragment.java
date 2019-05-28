@@ -4,6 +4,7 @@ package com.novo.zealot.UI.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,16 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.novo.zealot.Bean.RunRecord;
 import com.novo.zealot.R;
 import com.novo.zealot.UI.Activity.mapActivity;
+import com.novo.zealot.Utils.DateUtil;
+import com.novo.zealot.Utils.GlobalUtil;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RunFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
 public class RunFragment extends Fragment {
 
     public static final String TAG = "RunFragment";
@@ -30,37 +31,7 @@ public class RunFragment extends Fragment {
     Context context;
 
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-
-
     public RunFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RunFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RunFragment newInstance(String param1, String param2) {
-        RunFragment fragment = new RunFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -68,19 +39,14 @@ public class RunFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Log.d(TAG, "onCreateView()");
         View view = inflater.inflate(R.layout.fragment_run, container, false);
 
         //设置TickerView
@@ -111,8 +77,21 @@ public class RunFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        tv_todayDistance.setText("56789");
         Log.d(TAG, "onStart()");
+
+        String todayDate = DateUtil.getFormattedDate();
+        List<RunRecord> results = GlobalUtil.getInstance().databaseHelper.queryRecord(todayDate);
+
+        //今日运动总距离 保留至个位
+        int todayTotalDistance = 0;
+        for (RunRecord record :
+                results) {
+            todayTotalDistance += record.getDistance();
+        }
+
+        tv_todayDistance.setText(todayTotalDistance + "");
+
+
 
     }
 
