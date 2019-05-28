@@ -1,7 +1,6 @@
 package com.novo.zealot.UI.Fragment;
 
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.novo.zealot.R;
-import com.novo.zealot.UI.Activity.MainActivity;
 import com.novo.zealot.UI.Activity.mapActivity;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -88,6 +86,7 @@ public class RunFragment extends Fragment {
         //设置TickerView
         tv_todayDistance = view.findViewById(R.id.tv_todayDistance);
         tv_todayDistance.setCharacterLists(TickerUtils.provideNumberList());
+        tv_todayDistance.setAnimationDuration(3000);
 
         //添加OnClickListener
         img_run = view.findViewById(R.id.img_run);
@@ -112,7 +111,7 @@ public class RunFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        tv_todayDistance.setText("12123");
+        tv_todayDistance.setText("56789");
         Log.d(TAG, "onStart()");
 
     }

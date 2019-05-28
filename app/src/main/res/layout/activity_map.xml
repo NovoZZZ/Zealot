@@ -4,44 +4,44 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:orientation="horizontal">-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="经度:" />
-        <!-- 定义输入经度值的文本框 -->
-        <EditText
-            android:id="@+id/lng"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text="117.704138" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="经度:" />-->
+        <!--&lt;!&ndash; 定义输入经度值的文本框 &ndash;&gt;-->
+        <!--<EditText-->
+            <!--android:id="@+id/lng"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="numberDecimal"-->
+            <!--android:text="117.704138" />-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="8dp"
-            android:text="纬度:" />
-        <!-- 定义输入纬度值的文本框 -->
-        <EditText
-            android:id="@+id/lat"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:inputType="numberDecimal"
-            android:text="39.089856" />
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:paddingLeft="8dp"-->
+            <!--android:text="纬度:" />-->
+        <!--&lt;!&ndash; 定义输入纬度值的文本框 &ndash;&gt;-->
+        <!--<EditText-->
+            <!--android:id="@+id/lat"-->
+            <!--android:layout_width="100dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:inputType="numberDecimal"-->
+            <!--android:text="39.089856" />-->
 
-        <Button
-            android:id="@+id/loc"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="定位" />
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/loc"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="4"-->
+            <!--android:text="定位" />-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
