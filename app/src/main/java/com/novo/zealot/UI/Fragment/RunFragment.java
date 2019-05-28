@@ -78,7 +78,12 @@ public class RunFragment extends Fragment {
     public void onStart() {
         super.onStart();
         Log.d(TAG, "onStart()");
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume()");
         String todayDate = DateUtil.getFormattedDate();
         List<RunRecord> results = GlobalUtil.getInstance().databaseHelper.queryRecord(todayDate);
 
@@ -90,15 +95,8 @@ public class RunFragment extends Fragment {
         }
 
         tv_todayDistance.setText(todayTotalDistance + "");
+        Log.d(TAG, todayTotalDistance + "");
 
-
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume()");
     }
 
     @Override

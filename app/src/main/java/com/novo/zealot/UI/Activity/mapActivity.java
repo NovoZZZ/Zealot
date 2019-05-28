@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
@@ -59,11 +60,15 @@ public class mapActivity extends Activity implements AMapLocationListener,
     //绘制路线
     List<LatLng> path = new ArrayList<LatLng>();
     //上一次定位位置和当前定位位置，用于计算距离
-    LatLng lastLatLng,nowLatLng;
+    LatLng lastLatLng, nowLatLng;
     //此次运动总距离
-    float distanceThisTime = 0;
+    int distanceThisTime = 0;
     //平均速度
     float avgSpeed = 0;
+
+
+    //停止按钮
+    FloatingActionButton btn_stop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +81,29 @@ public class mapActivity extends Activity implements AMapLocationListener,
         mapView = (MapView) findViewById(R.id.map);
         //在activity执行onCreate时执行mapView.onCreate(savedInstanceState)，创建地图
         mapView.onCreate(savedInstanceState);
+
+        btn_stop = findViewById(R.id.btn_stop);
+        btn_stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //将此次数据存入数据库
+                RunRecord runRecord = new RunRecord();
+                runRecord.setEndTime(new Date());
+                runRecord.setDistance(distanceThisTime);
+                runRecord.setDuration((int) ((runRecord.getEndTime().getTime() - runRecord.getStartTime().getTime()) / 1000));
+                runRecord.setAvgSpeed(avgSpeed);
+                if (GlobalUtil.getInstance().databaseHelper.addRecord(runRecord)) {
+                    Log.d(TAG, "数据存储成功");
+                    Toast.makeText(getApplicationContext(), "数据存储成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG, "数据存储失败");
+                    Toast.makeText(getApplicationContext(), "数据记录失败", Toast.LENGTH_SHORT).show();
+                }
+
+                finish();
+            }
+        });
+
         //初始化地图控制器对象
         init();
         //设置显示定位按钮 并且可以点击
@@ -290,15 +318,22 @@ public class mapActivity extends Activity implements AMapLocationListener,
 
                 //计算平均速度，即 (当前速度+当前平均速度)/2
                 //若为第一次定位，则当前速度为平均速度
-                if (isFirstLoc){
+                if (isFirstLoc) {
                     avgSpeed = nowSpeed;
-                }else{
-                    avgSpeed = (avgSpeed + nowSpeed)/2;
+                } else {
+                    avgSpeed = (avgSpeed + nowSpeed) / 2;
                 }
 
                 //如果不是第一次定位，则把上次定位信息传给lastLatLng
                 if (!isFirstLoc) {
-                    lastLatLng = nowLatLng;
+                    if ((int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng) < 100) {
+                        lastLatLng = nowLatLng;
+                    } else {
+                        //定位出现问题，如突然瞬移，则取消此次定位修改
+                        Toast.makeText(getApplicationContext()
+                                , "此次计算距离差异过大，取消此次修改"
+                                , Toast.LENGTH_SHORT).show();
+                    }
                 }
                 double latitude = amapLocation.getLatitude();//获取纬度
                 double longitude = amapLocation.getLongitude();//获取经度
@@ -325,13 +360,15 @@ public class mapActivity extends Activity implements AMapLocationListener,
 
 
                 //如果不是第一次定位，就计算距离
-                if(!isFirstLoc){
-                    float tempDistance = AMapUtils.calculateLineDistance(nowLatLng,lastLatLng);
+                if (!isFirstLoc) {
+                    int tempDistance = (int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng);
+
+
                     distanceThisTime += tempDistance;
                     Toast.makeText(getApplicationContext()
                             , "此次计算距离：" + tempDistance
-                            + " 此次运动总距离: " + distanceThisTime + " 速度：" + nowSpeed
-                            ,Toast.LENGTH_SHORT).show();
+                                    + " 此次运动总距离: " + distanceThisTime + " 速度：" + nowSpeed
+                            , Toast.LENGTH_SHORT).show();
                 }
 
                 //将地图移动到定位点
@@ -422,21 +459,9 @@ public class mapActivity extends Activity implements AMapLocationListener,
     protected void onStop() {
         Log.d(TAG, "map onStop");
         super.onStop();
-        mLocationClient.stopLocation();
 
-        //将此次数据存入数据库
-        RunRecord runRecord = new RunRecord();
-        runRecord.setEndTime(new Date());
-        runRecord.setDistance(distanceThisTime);
-        runRecord.setDuration((int)((runRecord.getEndTime().getTime() - runRecord.getStartTime().getTime())/1000));
-        runRecord.setAvgSpeed(avgSpeed);
-        if (GlobalUtil.getInstance().databaseHelper.addRecord(runRecord)){
-            Log.d(TAG, "数据存储成功");
-            Toast.makeText(getApplicationContext(), "数据存储成功", Toast.LENGTH_SHORT).show();
-        }else{
-            Log.d(TAG, "数据存储失败");
-            Toast.makeText(getApplicationContext(), "数据记录失败", Toast.LENGTH_SHORT).show();
-        }
+        //结束时停止更新位置
+        mLocationClient.stopLocation();
     }
 
     @Override

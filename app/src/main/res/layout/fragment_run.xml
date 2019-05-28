@@ -12,21 +12,33 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
-
-        <com.robinhood.ticker.TickerView
-            android:id="@+id/tv_todayDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textSize="50sp" />
-
+        android:orientation="vertical">
+        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="米"
-            android:textColor="@android:color/black"
-            android:textSize="50sp" />
+            android:text="今日运动距离"
+            android:textSize="40sp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <com.robinhood.ticker.TickerView
+                android:id="@+id/tv_todayDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="50sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="米"
+                android:textColor="@android:color/black"
+                android:textSize="50sp" />
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -43,7 +55,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_play_circle_filled_black_48dp" />
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始跑步"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 </LinearLayout>
