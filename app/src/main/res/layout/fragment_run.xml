@@ -7,6 +7,16 @@
     android:orientation="vertical"
     tools:context=".UI.Fragment.RunFragment">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Zealot"
+        android:textColor="@color/lightWhiteFg"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:background="@color/lightDark"
+        android:elevation="10dp"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -18,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="今日运动距离"
-            android:textSize="40sp"/>
+            android:textSize="30sp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -30,14 +40,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0"
-                android:textSize="50sp" />
+                android:textSize="60sp" />
 
             <TextView
+                android:id="@+id/tv_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:text="米"
                 android:textColor="@android:color/black"
-                android:textSize="50sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
 
@@ -54,12 +66,13 @@
             android:id="@+id/img_run"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_play_circle_filled_black_48dp" />
+            android:src="@drawable/ic_play_circle_filled_black_48dp"
+            android:elevation="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="开始跑步"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
 </LinearLayout>

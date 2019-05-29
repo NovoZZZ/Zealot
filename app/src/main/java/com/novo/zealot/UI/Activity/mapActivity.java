@@ -278,11 +278,16 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 if (!isFirstLoc) {
                     int tempDistance = (int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng);
 
+                    //
+                    int testDuration = (int)(new Date().getTime() - startTime.getTime()) / 1000;
+                    //
 
                     distanceThisTime += tempDistance;
                     Toast.makeText(getApplicationContext()
                             , "此次计算距离：" + tempDistance
-                                    + " 此次运动总距离: " + distanceThisTime + " 速度：" + nowSpeed
+                                    + " 此次运动总距离: " + distanceThisTime
+                                    + " 速度：" + nowSpeed
+                                    + "持续时间：" + testDuration
                             , Toast.LENGTH_SHORT).show();
                 }
 

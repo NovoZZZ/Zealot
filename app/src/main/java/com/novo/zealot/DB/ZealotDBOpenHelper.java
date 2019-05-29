@@ -45,8 +45,8 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
     /**
      * 添加记录至Database
      *
-     * @param runRecord
-     * @return
+     * @param runRecord the record you want to add to database
+     * @return if added successfully, then return true. Otherwise, return false.
      */
     public boolean addRecord(RunRecord runRecord) {
         SQLiteDatabase db = getWritableDatabase();
@@ -76,8 +76,8 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
     /**
      * 查询记录
      *
-     * @param queryDate
-     * @return
+     * @param queryDate the date you want to query
+     * @return a list of RunRecords
      */
     public List<RunRecord> queryRecord(String queryDate) {
         List<RunRecord> results = new ArrayList<>();
@@ -119,7 +119,6 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
             }
         }
 
-        cursor.close();
         return results;
 
     }
@@ -128,7 +127,7 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
      * 返回所有数据
      * 调用queryRecord(null)
      *
-     * @return
+     * @return a list of all RunRecords
      */
     public List<RunRecord> queryRecord() {
 
@@ -137,4 +136,58 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
         return results;
     }
 
+    /**
+     * 查询最远距离
+     *
+     * @return the result of the farthest distance in the database
+     */
+    public double queryBestDistance() {
+        String sql = "select max(distance) from " + TABLE_NAME;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        double result = 0;
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            result = cursor.getDouble(0);
+        }
+        cursor.close();
+        return result;
+    }
+
+    /**
+     * 查询最快速度
+     *
+     * @return the result of the highest speed in the database
+     */
+    public double queryBestSpeed() {
+        String sql = "select max(avgSpeed) from " + TABLE_NAME;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        double result = 0;
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            result = cursor.getDouble(0);
+        }
+        cursor.close();
+        return result;
+    }
+
+    /**
+     * 查询最长时间
+     *
+     * @return the result of the longest duration in the database
+     */
+    public int queryBestTime() {
+        String sql = "select max(duration) from " + TABLE_NAME;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        int result = 0;
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            result = cursor.getInt(0);
+
+        }
+        cursor.close();
+        return result;
+    }
 }

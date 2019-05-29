@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.novo.zealot.Bean.RunRecord;
 import com.novo.zealot.R;
+import com.novo.zealot.Utils.DataUtil;
 import com.novo.zealot.Utils.DateUtil;
 
 import java.util.List;
@@ -72,7 +73,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.RecordHolder> {
 
         recordHolder.tv_recordStartTime.setText(DateUtil.getFormattedTime(record.getStartTime()));
         recordHolder.tv_recordAvgSpeed.setText(String.valueOf((int)record.getAvgSpeed()));
-        recordHolder.tv_recordDuration.setText(String.valueOf(record.getDuration()));
+        recordHolder.tv_recordDuration.setText(DataUtil.getFormattedTime(record.getDuration()));
     }
 
     @Override

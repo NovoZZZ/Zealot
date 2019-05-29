@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +36,6 @@ public class RunFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
     }
@@ -83,16 +81,20 @@ public class RunFragment extends Fragment {
         String todayDate = DateUtil.getFormattedDate();
         List<RunRecord> results = GlobalUtil.getInstance().databaseHelper.queryRecord(todayDate);
 
-        //今日运动总距离 保留至个位
+        //今日运动总距离
         int todayTotalDistance = 0;
         for (RunRecord record :
                 results) {
             todayTotalDistance += record.getDistance();
         }
 
-        tv_todayDistance.setText(todayTotalDistance + "");
-        Log.d(TAG, todayTotalDistance + "");
-
+        //若大于1公里，则显示公里数
+        if (todayTotalDistance < 1000) {
+            tv_todayDistance.setText(todayTotalDistance + "");
+        }else{
+            double disKM = todayTotalDistance/1000.0;
+            tv_todayDistance.setText(disKM + "");
+        }
     }
 
     @Override
