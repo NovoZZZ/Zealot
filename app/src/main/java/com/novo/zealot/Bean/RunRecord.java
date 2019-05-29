@@ -1,5 +1,9 @@
 package com.novo.zealot.Bean;
 
+/**
+ * Created by Novo on 2019/5/27.
+ */
+
 import com.novo.zealot.Utils.DateUtil;
 
 import java.util.Date;

@@ -1,5 +1,8 @@
 package com.novo.zealot.UI.Activity;
 
+/**
+ * Created by Novo on 2019/5/27.
+ */
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;

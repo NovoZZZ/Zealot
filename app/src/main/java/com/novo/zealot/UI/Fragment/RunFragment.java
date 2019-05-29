@@ -1,5 +1,8 @@
 package com.novo.zealot.UI.Fragment;
 
+/**
+ * Created by Novo on 2019/5/27.
+ */
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,11 +12,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.novo.zealot.Bean.RunRecord;
 import com.novo.zealot.R;
-import com.novo.zealot.UI.Activity.mapActivity;
+import com.novo.zealot.UI.Activity.CountDownActivity;
 import com.novo.zealot.Utils.DateUtil;
 import com.novo.zealot.Utils.GlobalUtil;
 import com.robinhood.ticker.TickerUtils;
@@ -26,8 +30,9 @@ public class RunFragment extends Fragment {
     public static final String TAG = "RunFragment";
 
     TickerView tv_todayDistance;
-    ImageView img_run;
+    ImageButton btn_run;
     Context context;
+    TextView tv_unit;
 
 
     public RunFragment() {
@@ -49,17 +54,18 @@ public class RunFragment extends Fragment {
         //设置TickerView
         tv_todayDistance = view.findViewById(R.id.tv_todayDistance);
         tv_todayDistance.setCharacterLists(TickerUtils.provideNumberList());
-        tv_todayDistance.setAnimationDuration(3000);
+        tv_todayDistance.setAnimationDuration(2000);
 
         //添加OnClickListener
-        img_run = view.findViewById(R.id.img_run);
-        img_run.setOnClickListener(new View.OnClickListener() {
+        btn_run = view.findViewById(R.id.btn_run);
+        btn_run.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, mapActivity.class);
+                Intent intent = new Intent(context, CountDownActivity.class);
                 context.startActivity(intent);
             }
         });
+        tv_unit = view.findViewById(R.id.tv_unit);
 
         return view;
     }
@@ -94,6 +100,7 @@ public class RunFragment extends Fragment {
         }else{
             double disKM = todayTotalDistance/1000.0;
             tv_todayDistance.setText(disKM + "");
+            tv_unit.setText("公里");
         }
     }
 

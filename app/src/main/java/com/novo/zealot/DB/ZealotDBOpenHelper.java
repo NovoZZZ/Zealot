@@ -1,5 +1,9 @@
 package com.novo.zealot.DB;
 
+/**
+ * Created by Novo on 2019/5/27.
+ */
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -190,4 +194,59 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
         cursor.close();
         return result;
     }
+
+    /**
+     * 查询跑步总距离
+     * @return sum of running distance
+     */
+    public int queryAllDistance(){
+        String sql = "select sum(distance) from " + TABLE_NAME;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        int result = 0;
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            result = cursor.getInt(0);
+
+        }
+        cursor.close();
+        return result;
+    }
+
+    /**
+     * 查询跑步总天数
+     * @return number of running days
+     */
+    public int queryNumOfDays(){
+        String sql = "select count(date) from " + TABLE_NAME + " group by date";
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        int result = 0;
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            result = cursor.getInt(0);
+
+        }
+        cursor.close();
+        return result;
+    }
+
+    /**
+     * 查询跑步总次数
+     * @return number of running times
+     */
+    public int queryNumOfTimes(){
+        String sql = "select count(*) from " + TABLE_NAME;
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, null);
+        int result = 0;
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            result = cursor.getInt(0);
+
+        }
+        cursor.close();
+        return result;
+    }
+
 }

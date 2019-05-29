@@ -1,5 +1,8 @@
 package com.novo.zealot.UI.Activity;
 
+/**
+ * Created by Novo on 2019/5/27.
+ */
 
 import android.Manifest;
 import android.app.Activity;
@@ -15,10 +18,9 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.RadioButton;
+import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ToggleButton;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -36,7 +38,10 @@ import com.amap.api.maps.model.Polyline;
 import com.amap.api.maps.model.PolylineOptions;
 import com.novo.zealot.Bean.RunRecord;
 import com.novo.zealot.R;
+import com.novo.zealot.Utils.DataUtil;
 import com.novo.zealot.Utils.GlobalUtil;
+import com.robinhood.ticker.TickerUtils;
+import com.robinhood.ticker.TickerView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +73,12 @@ public class mapActivity extends Activity implements AMapLocationListener,
     float avgSpeed = 0;
     //开始时间
     Date startTime;
+    //
+    boolean isNormalMap = true;
 
+    //数据显示
+    TextView tv_mapSpeed, tv_mapDuration, tv_mapUnit;
+    TickerView tv_mapDistance;
 
     //停止按钮
     FloatingActionButton btn_stop;
@@ -86,12 +96,35 @@ public class mapActivity extends Activity implements AMapLocationListener,
         //初始化开始时间
         startTime = new Date();
 
+        //初始化数据显示组件
+        tv_mapDuration = findViewById(R.id.tv_mapDuration);
+        tv_mapSpeed = findViewById(R.id.tv_mapSpeed);
+        tv_mapUnit = findViewById(R.id.tv_mapUnit);
+
+        tv_mapDistance = findViewById(R.id.tv_mapDistance);
+        tv_mapDistance.setCharacterLists(TickerUtils.provideNumberList());
+        tv_mapDistance.setAnimationDuration(500);
+
+        //初始化停止按钮
         btn_stop = findViewById(R.id.btn_stop);
         btn_stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Intent intent = new Intent(mapActivity.this, RunResultActivity.class);
+
+                //将此次数据传给结果页面
+                intent.putExtra("startTime", startTime);
+                intent.putExtra("endTime", new Date());
+                intent.putExtra("duration", (int) ((new Date().getTime() - startTime.getTime()) / 1000));
+
                 //若距离为0，则不存入数据库
-                if (distanceThisTime == 0){
+                if (distanceThisTime == 0) {
+                    Toast.makeText(getApplicationContext(), "距离过短，此次记录无效", Toast.LENGTH_SHORT).show();
+                    //说明此次无效
+                    intent.putExtra("isValid", false);
+
+                    startActivity(intent);
                     finish();
                     return;
                 }
@@ -105,16 +138,21 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 if (GlobalUtil.getInstance().databaseHelper.addRecord(runRecord)) {
                     Toast.makeText(getApplicationContext(), "数据存储成功", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.d(TAG, "数据存储失败");
                     Toast.makeText(getApplicationContext(), "数据记录失败", Toast.LENGTH_SHORT).show();
                 }
 
+                //说明此次有效
+                intent.putExtra("isValid", true);
+                intent.putExtra("distance", distanceThisTime);
+                intent.putExtra("avgSpeed", avgSpeed);
+                startActivity(intent);
                 finish();
             }
         });
 
         //初始化地图控制器对象
         init();
+        aMap.setMapType(AMap.MAP_TYPE_NORMAL);
         //设置显示定位按钮 并且可以点击
         UiSettings settings = aMap.getUiSettings();
         //设置定位监听
@@ -130,32 +168,14 @@ public class mapActivity extends Activity implements AMapLocationListener,
         aMap.setMyLocationStyle(myLocationStyle);
         // 开启定位
         initLoc();
-        RadioButton rb = (RadioButton) findViewById(R.id.gps);
-        // 为GPS单选按钮设置监听器
-        rb.setOnClickListener(new View.OnClickListener() {
+        ImageButton btn_changeMap = findViewById(R.id.btn_changeMap);
+        btn_changeMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //初始化地图控制器对象
-                init();
-                //设置显示定位按钮 并且可以点击
-                UiSettings settings = aMap.getUiSettings();
-                //设置定位监听
-                aMap.setLocationSource(mapActivity.this);
-                // 是否显示定位按钮
-                settings.setMyLocationButtonEnabled(true);
-                // 是否可触发定位并显示定位层
-                aMap.setMyLocationEnabled(true);
-                // 开启定位
-                initLoc();
-            }
-        });
-        ToggleButton tb = (ToggleButton) findViewById(R.id.tb);
-        tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
+                if (isNormalMap) {
                     // 设置使用卫星地图
                     aMap.setMapType(AMap.MAP_TYPE_SATELLITE);
+                    isNormalMap = false;
                 } else {
                     // 设置使用普通地图
                     aMap.setMapType(AMap.MAP_TYPE_NORMAL);
@@ -202,7 +222,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
         //设置是否允许模拟位置,默认为false，不允许模拟位置
         mLocationOption.setMockEnable(false);
         //设置定位间隔,单位毫秒,默认为2000ms
-        mLocationOption.setInterval(3000);
+        mLocationOption.setInterval(1000);
         //给定位客户端对象设置定位参数
         mLocationClient.setLocationOption(mLocationOption);
         //启动定位
@@ -248,6 +268,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                         Toast.makeText(getApplicationContext()
                                 , "此次计算距离差异过大，取消此次修改"
                                 , Toast.LENGTH_SHORT).show();
+                        return;
                     }
                 }
                 double latitude = amapLocation.getLatitude();//获取纬度
@@ -278,17 +299,35 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 if (!isFirstLoc) {
                     int tempDistance = (int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng);
 
-                    //
-                    int testDuration = (int)(new Date().getTime() - startTime.getTime()) / 1000;
-                    //
+                    //获得持续秒数
+                    int duration = (int) (new Date().getTime() - startTime.getTime()) / 1000;
+                    //将持续秒数转化为HH:mm:ss并显示到控件
+                    tv_mapDuration.setText(DataUtil.getFormattedTime(duration));
 
+                    //计算总距离
                     distanceThisTime += tempDistance;
-                    Toast.makeText(getApplicationContext()
-                            , "此次计算距离：" + tempDistance
-                                    + " 此次运动总距离: " + distanceThisTime
-                                    + " 速度：" + nowSpeed
-                                    + "持续时间：" + testDuration
-                            , Toast.LENGTH_SHORT).show();
+                    //将总距离显示到控件
+                    if (distanceThisTime > 1000){
+                        //若大于1000米，则显示公里数
+                        double showDisKM = distanceThisTime / 1000.0;
+                        tv_mapDistance.setText(showDisKM + "");
+                        tv_mapUnit.setText("公里");
+                    }else {
+                        tv_mapDistance.setText(distanceThisTime + "");
+                    }
+                    //显示速度
+                    if (nowSpeed == 0){
+                        tv_mapSpeed.setText("--.--");
+                    }else{
+                        tv_mapSpeed.setText(nowSpeed+"");
+                    }
+
+//                    Toast.makeText(getApplicationContext()
+//                            , "此次计算距离：" + tempDistance
+//                                    + " 此次运动总距离: " + distanceThisTime
+//                                    + " 速度：" + nowSpeed
+//                                    + "持续时间：" + testDuration
+//                            , Toast.LENGTH_SHORT).show();
                 }
 
                 //将地图移动到定位点
@@ -353,6 +392,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "onDestroy");
         //在activity执行onDestroy时执行mapView.onDestroy()，销毁地图
         mapView.onDestroy();
         mLocationClient.onDestroy();
@@ -361,6 +401,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume");
         //在activity执行onResume时执行mapView.onResume ()，重新绘制加载地图
         mapView.onResume();
     }
@@ -368,6 +409,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause");
         //在activity执行onPause时执行mapView.onPause ()，暂停地图的绘制
         mapView.onPause();
     }
@@ -375,7 +417,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
     @Override
     protected void onStop() {
         super.onStop();
-
+        Log.d(TAG, "onStop");
         //结束时停止更新位置
         mLocationClient.stopLocation();
     }

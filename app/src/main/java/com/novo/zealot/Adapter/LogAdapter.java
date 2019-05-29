@@ -1,5 +1,9 @@
 package com.novo.zealot.Adapter;
 
+/**
+ * Created by Novo on 2019/5/28.
+ */
+
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -72,7 +76,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.RecordHolder> {
         }
 
         recordHolder.tv_recordStartTime.setText(DateUtil.getFormattedTime(record.getStartTime()));
-        recordHolder.tv_recordAvgSpeed.setText(String.valueOf((int)record.getAvgSpeed()));
+        recordHolder.tv_recordAvgSpeed.setText(String.valueOf((int)((record.getAvgSpeed()*100)/100)));
         recordHolder.tv_recordDuration.setText(DataUtil.getFormattedTime(record.getDuration()));
     }
 

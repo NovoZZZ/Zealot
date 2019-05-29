@@ -1,5 +1,9 @@
 package com.novo.zealot.Utils;
 
+/**
+ * Created by Novo on 2019/5/29.
+ */
+
 public class DataUtil {
     /**
      * 将持续时间转换为时分秒

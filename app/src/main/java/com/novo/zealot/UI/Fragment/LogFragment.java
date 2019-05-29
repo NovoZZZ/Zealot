@@ -1,5 +1,8 @@
 package com.novo.zealot.UI.Fragment;
 
+/**
+ * Created by Novo on 2019/5/28.
+ */
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -55,17 +58,17 @@ public class LogFragment extends Fragment {
         //设置最远距离TickerView
         tv_bestDistance = view.findViewById(R.id.tv_bestDistance);
         tv_bestDistance.setCharacterLists(TickerUtils.provideNumberList());
-        tv_bestDistance.setAnimationDuration(2000);
+        tv_bestDistance.setAnimationDuration(1000);
 
         //设置最快速度TickerView
         tv_bestSpeed = view.findViewById(R.id.tv_bestSpeed);
         tv_bestSpeed.setCharacterLists(TickerUtils.provideNumberList());
-        tv_bestSpeed.setAnimationDuration(2000);
+        tv_bestSpeed.setAnimationDuration(1000);
 
         //设置最长时间TickerView
         tv_bestTime = view.findViewById(R.id.tv_bestTime);
         tv_bestTime.setCharacterLists(TickerUtils.provideNumberList());
-        tv_bestTime.setAnimationDuration(2000);
+        tv_bestTime.setAnimationDuration(1000);
 
         // Inflate the layout for this fragment
         return view;

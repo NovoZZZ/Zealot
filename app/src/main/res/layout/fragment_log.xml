@@ -23,13 +23,12 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:background="@color/lightWhiteFg"
-        android:elevation="10dp">
+        android:background="@color/lightWhiteFg">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="我的最佳成绩"
-            android:layout_margin="15dp" />
+            android:layout_marginLeft="15dp" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +40,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:background="@color/tiffanyGreen">
+                android:background="@color/tiffanyGreen"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="7dp"
+                android:elevation="10dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,6 +81,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dp"
                             android:text="公里"
                             android:textSize="12sp"
                             android:layout_marginTop="15dp"
@@ -93,7 +97,10 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@color/purpleBkg"
-                android:layout_marginLeft="30dp">
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginBottom="10dp"
+                android:elevation="10dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -131,6 +138,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="米/秒"
+                            android:layout_marginLeft="5dp"
                             android:layout_marginTop="15dp"
                             android:textSize="12sp"
                             android:textColor="@color/lightWhiteFg"/>
@@ -154,8 +162,9 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@color/lightDark"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:elevation="10dp">
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -173,8 +182,8 @@
                         android:layout_height="wrap_content"
                         android:text="最长用时"
                         android:textSize="12sp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginRight="258dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="240dp"
                         android:layout_marginBottom="5dp"
                         android:textColor="@color/lightWhiteFg"
                         />
