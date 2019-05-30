@@ -3,6 +3,7 @@ package com.novo.zealot.UI.Fragment;
 /**
  * Created by Novo on 2019/5/28.
  */
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.novo.zealot.Adapter.LogAdapter;
 import com.novo.zealot.Bean.RunRecord;
@@ -27,8 +29,8 @@ public class LogFragment extends Fragment {
 
     RecyclerView rv_log;
     LogAdapter logAdapter;
-
-    TickerView tv_bestDistance,tv_bestSpeed, tv_bestTime;
+    TextView tv_bestDistanceUnit;
+    TickerView tv_bestDistance, tv_bestSpeed, tv_bestTime;
 
     public LogFragment() {
     }
@@ -54,6 +56,9 @@ public class LogFragment extends Fragment {
 
         DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         rv_log.addItemDecoration(decoration);
+
+        //最远距离单位
+        tv_bestDistanceUnit = view.findViewById(R.id.tv_bestDistanceUnit);
 
         //设置最远距离TickerView
         tv_bestDistance = view.findViewById(R.id.tv_bestDistance);
@@ -88,8 +93,17 @@ public class LogFragment extends Fragment {
         rv_log.setAdapter(logAdapter);
 
         //获取最远距离，最快速度，最长时间
-        double bestDistance = ((int)GlobalUtil.getInstance().databaseHelper.queryBestDistance())/1000;
-        double bestSpeed = ((int)(GlobalUtil.getInstance().databaseHelper.queryBestSpeed()*100))/100;
+        //保留至个位
+        int bestDistance = (int) GlobalUtil.getInstance().databaseHelper.queryBestDistance();
+        if (bestDistance < 1000) {
+            tv_bestDistanceUnit.setText("米");
+            tv_bestDistance.setText(bestDistance + "");
+        } else {
+            //保留两位
+            int bestDistanceInKM = (bestDistance / 100)/10;
+            tv_bestDistance.setText(bestDistanceInKM+"");
+        }
+        double bestSpeed = ((int) (GlobalUtil.getInstance().databaseHelper.queryBestSpeed() * 100)) / 100;
         String bestTime = DataUtil.getFormattedTime(GlobalUtil.getInstance().databaseHelper.queryBestTime());
 
         tv_bestDistance.setText("" + bestDistance);

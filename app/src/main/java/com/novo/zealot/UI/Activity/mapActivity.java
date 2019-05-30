@@ -139,7 +139,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 runRecord.setDuration((int) ((new Date().getTime() - startTime.getTime()) / 1000));
                 runRecord.setAvgSpeed(avgSpeed);
                 if (GlobalUtil.getInstance().databaseHelper.addRecord(runRecord)) {
-                    Toast.makeText(getApplicationContext(), "数据存储成功", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "数据已记录", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "数据记录失败", Toast.LENGTH_SHORT).show();
                 }
@@ -343,13 +343,13 @@ public class mapActivity extends Activity implements AMapLocationListener,
                         //设置缩放级别
                         aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
                         aMap.moveCamera(CameraUpdateFactory.changeTilt(0));
-                        //获取定位信息
-                        StringBuilder buffer = new StringBuilder();
-                        buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince()
-                                + "" + amapLocation.getCity() + "" + amapLocation.getProvince()
-                                + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet()
-                                + "" + amapLocation.getStreetNum());
-                        Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
+//                        //获取定位信息
+//                        StringBuilder buffer = new StringBuilder();
+//                        buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince()
+//                                + "" + amapLocation.getCity() + "" + amapLocation.getProvince()
+//                                + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet()
+//                                + "" + amapLocation.getStreetNum());
+//                        Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
                         isFirstLoc = false;
                     }
                 }
@@ -358,7 +358,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 Log.e("AmapError", "location Error, ErrCode:"
                         + amapLocation.getErrorCode() + ", errInfo:"
                         + amapLocation.getErrorInfo());
-                Toast.makeText(getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "定位似乎有些问题", Toast.LENGTH_LONG).show();
             }
         }
 

@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.hb.dialog.myDialog.MyAlertInputDialog;
 import com.novo.zealot.R;
 import com.novo.zealot.UI.Activity.SettingActivity;
+import com.novo.zealot.Utils.DataUtil;
 import com.novo.zealot.Utils.GlobalUtil;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -133,9 +134,15 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String name = myAlertInputDialog.getResult();
-                        tv_name.setText(name);
+                        if (name.length() == 0) {
+                            Toast.makeText(view.getContext(), "昵称不能为空!", Toast.LENGTH_SHORT).show();
+                        } else if (name.length() > 8) {
+                            Toast.makeText(view.getContext(), "昵称不能超过8个字节!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            tv_name.setText(name);
+                            Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                        }
                         myAlertInputDialog.dismiss();
-                        Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
                     @Override
@@ -159,9 +166,15 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String age = myAlertInputDialog.getResult();
-                        tv_age.setText(age);
+                        if (age.length() == 0) {
+                            Toast.makeText(view.getContext(), "年龄不能为空!", Toast.LENGTH_SHORT).show();
+                        } else if (!DataUtil.isNumeric(age) || Integer.parseInt(age) < 0 || Integer.parseInt(age) > 100) {
+                            Toast.makeText(view.getContext(), "输入有误!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            tv_age.setText(age);
+                            Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                        }
                         myAlertInputDialog.dismiss();
-                        Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
                     @Override
@@ -185,9 +198,15 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String height = myAlertInputDialog.getResult();
-                        tv_height.setText(height);
+                        if (height.length() == 0) {
+                            Toast.makeText(view.getContext(), "身高不能为空!", Toast.LENGTH_SHORT).show();
+                        } else if (!DataUtil.isNumeric(height) || Integer.parseInt(height) < 0 || Integer.parseInt(height) > 100) {
+                            Toast.makeText(view.getContext(), "输入有误!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            tv_height.setText(height);
+                            Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                        }
                         myAlertInputDialog.dismiss();
-                        Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
                     @Override
@@ -211,9 +230,15 @@ public class ProfileFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String weight = myAlertInputDialog.getResult();
-                        tv_weight.setText(weight);
+                        if (weight.length() == 0) {
+                            Toast.makeText(view.getContext(), "体重不能为空!", Toast.LENGTH_SHORT).show();
+                        } else if (!DataUtil.isNumeric(weight) || Integer.parseInt(weight) < 0 || Integer.parseInt(weight) > 100) {
+                            Toast.makeText(view.getContext(), "输入有误!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            tv_weight.setText(weight);
+                            Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
+                        }
                         myAlertInputDialog.dismiss();
-                        Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
                     }
                 }).setNegativeButton("取消", new View.OnClickListener() {
                     @Override
@@ -236,7 +261,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), SettingActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -380,10 +405,10 @@ public class ProfileFragment extends Fragment {
         try {
             outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-            String name = tv_name.getText().toString()+"\n";
-            String age = tv_age.getText().toString()+"\n";
+            String name = tv_name.getText().toString() + "\n";
+            String age = tv_age.getText().toString() + "\n";
             String height = tv_height.getText().toString() + "\n";
-            String weight = tv_weight.getText().toString()+"\n";
+            String weight = tv_weight.getText().toString() + "\n";
 
             bufferedWriter.write(name);
             bufferedWriter.write(age);
@@ -399,14 +424,14 @@ public class ProfileFragment extends Fragment {
     /**
      * 读取个人信息
      */
-    private void readPersonalData(){
+    private void readPersonalData() {
         StringBuilder sBuilder = new StringBuilder();
 
         InputStream inputStream = null;
         try {
             inputStream = context.openFileInput(fileName);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String name,age,height,weight;
+            String name, age, height, weight;
 
             //读取
             name = bufferedReader.readLine();

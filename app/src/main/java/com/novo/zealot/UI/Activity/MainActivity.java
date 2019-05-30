@@ -3,6 +3,8 @@ package com.novo.zealot.UI.Activity;
 /**
  * Created by Novo on 2019/5/27.
  */
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,6 +20,9 @@ import com.novo.zealot.UI.Fragment.ProfileFragment;
 import com.novo.zealot.UI.Fragment.RunFragment;
 import com.novo.zealot.Utils.GlobalUtil;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private LogFragment frgLog;
     private RunFragment frgRun;
     private ProfileFragment frgProfile;
+    String isFirstUse = null;
 
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -78,6 +84,23 @@ public class MainActivity extends AppCompatActivity {
         //设置Context
         GlobalUtil.getInstance().setContext(getApplicationContext());
         GlobalUtil.getInstance().mainActivity = this;
+
+        InputStream inputStream = null;
+
+        try {
+            inputStream = openFileInput("config");
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            isFirstUse = bufferedReader.readLine();
+            bufferedReader.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //说明是第一次使用
+        if (isFirstUse == null || !isFirstUse.equals("false")){
+            Intent intent = new Intent(MainActivity.this, firstUseActivity.class);
+            startActivity(intent);
+        }
     }
 
 

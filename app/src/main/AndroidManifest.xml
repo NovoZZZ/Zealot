@@ -28,7 +28,8 @@
         android:roundIcon="@mipmap/icon_zealot_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.Activity.AboutActivity"></activity>
+        <activity android:name=".UI.Activity.firstUseActivity"></activity>
+        <activity android:name=".UI.Activity.AboutActivity" />
         <activity android:name=".UI.Activity.SettingActivity" />
         <activity android:name=".UI.Activity.RunResultActivity" />
         <activity android:name=".UI.Activity.CountDownActivity" />
@@ -46,7 +47,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="40c16b4ef7c810d9a0ef940d29b97ed2" />
+            android:value="46ecbef533db704dc247a71d18de96b5" />
 
         <activity android:name=".UI.Activity.mapActivity" />
 
