@@ -23,20 +23,41 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_setting"
         android:layout_marginTop="10dp"
-        android:background="@color/lightWhiteFg"
         android:orientation="vertical">
+
+        <!--清除数据-->
         <LinearLayout
             android:id="@+id/ll_deleteAll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingBottom="10dp"
+            android:background="@color/lightWhiteFg">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
                 android:text="清除所有数据"
+                android:layout_marginLeft="15dp"/>
+
+        </LinearLayout>
+
+        <!--关于Zealot-->
+        <LinearLayout
+            android:id="@+id/ll_about"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/lightWhiteFg">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="关于Zealot"
                 android:layout_marginLeft="15dp"/>
 
         </LinearLayout>

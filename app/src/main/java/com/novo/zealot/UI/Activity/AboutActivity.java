@@ -1,26 +1,22 @@
 package com.novo.zealot.UI.Activity;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.Toast;
 
-import com.hb.dialog.myDialog.MyAlertDialog;
 import com.novo.zealot.R;
-import com.novo.zealot.Utils.GlobalUtil;
 
-public class SettingActivity extends Activity implements View.OnTouchListener {
+import java.util.Random;
 
-    //删除所有数据
-    LinearLayout ll_deleteAll;
+public class AboutActivity extends Activity implements View.OnTouchListener {
 
-    //关于
-    LinearLayout ll_about;
+    int count = 0;
 
     //手指向右滑动时的最小速度
     private static final int XSPEED_MIN = 200;
@@ -37,55 +33,31 @@ public class SettingActivity extends Activity implements View.OnTouchListener {
     //用于计算手指滑动的速度。
     private VelocityTracker mVelocityTracker;
 
+    LinearLayout ll;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_about);
 
-        //设置手势返回
-        RelativeLayout ll = findViewById(R.id.layout_setting);
+        ll = findViewById(R.id.layout_about);
         ll.setOnTouchListener(this);
-
-
-        //删除所有数据
-        ll_deleteAll = findViewById(R.id.ll_deleteAll);
-        ll_deleteAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final MyAlertDialog myAlertDialog = new MyAlertDialog(SettingActivity.this).builder()
-                        .setTitle("是否确认")
-                        .setMsg("确认删除所有数据，该操作不可恢复！！")
-                        .setPositiveButton("确认", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                GlobalUtil.getInstance().databaseHelper.deleteAllData();
-                            }
-                        }).setNegativeButton("取消", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                            }
-                        });
-                myAlertDialog.show();
-            }
-        });
-
-        //关于
-        ll_about = findViewById(R.id.ll_about);
-        ll_about.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, AboutActivity.class);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
-            }
-        });
-
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         createVelocityTracker(event);
+
+        //彩蛋
+        count++;
+        if (count == 5) {
+            count = 0;
+            String color = "#" + getRandColor();
+
+            Toast.makeText(AboutActivity.this, color, Toast.LENGTH_SHORT).show();
+            ll.setBackgroundColor(Color.parseColor(color));
+        }
+
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 xDown = event.getRawX();
@@ -97,9 +69,9 @@ public class SettingActivity extends Activity implements View.OnTouchListener {
                 //获取顺时速度
                 int xSpeed = getScrollVelocity();
                 //当滑动的距离大于我们设定的最小距离且滑动的瞬间速度大于我们设定的速度时，返回到上一个activity
-                if(distanceX > XDISTANCE_MIN && xSpeed > XSPEED_MIN) {
+                if (distanceX > XDISTANCE_MIN && xSpeed > XSPEED_MIN) {
                     finish();
-                    overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
                 }
                 break;
             case MotionEvent.ACTION_UP:
@@ -115,7 +87,6 @@ public class SettingActivity extends Activity implements View.OnTouchListener {
      * 创建VelocityTracker对象，并将触摸content界面的滑动事件加入到VelocityTracker当中。
      *
      * @param event
-     *
      */
     private void createVelocityTracker(MotionEvent event) {
         if (mVelocityTracker == null) {
@@ -148,8 +119,27 @@ public class SettingActivity extends Activity implements View.OnTouchListener {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             finish();
-            overridePendingTransition(R.anim.slide_in_left,R.anim.slide_out_right);
+            overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         }
         return true;
+    }
+
+    /**
+     * 获取十六进制的颜色代码.例如  "#5A6677"
+     * 分别取R、G、B的随机值，然后加起来即可
+     *
+     * @return String
+     */
+    public static String getRandColor() {
+        String R, G, B;
+        Random random = new Random();
+        R = Integer.toHexString(random.nextInt(256)).toUpperCase();
+        G = Integer.toHexString(random.nextInt(256)).toUpperCase();
+        B = Integer.toHexString(random.nextInt(256)).toUpperCase();
+
+        R = R.length() == 1 ? "0" + R : R;
+        G = G.length() == 1 ? "0" + G : G;
+        B = B.length() == 1 ? "0" + B : B;
+        return R + G + B;
     }
 }

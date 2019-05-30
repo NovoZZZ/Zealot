@@ -16,9 +16,9 @@ e-mail: novo.zou@hotmail.com
 
 ![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.png)
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.png)
 
 更新日志：
 
