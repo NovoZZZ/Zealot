@@ -122,7 +122,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 intent.putExtra("duration", (int) ((new Date().getTime() - startTime.getTime()) / 1000));
 
                 //若距离为0，则不存入数据库
-                if (distanceThisTime == 0) {
+                if (distanceThisTime < 10) {
                     Toast.makeText(getApplicationContext(), "距离过短，此次记录无效", Toast.LENGTH_SHORT).show();
                     //说明此次无效
                     intent.putExtra("isValid", false);
@@ -358,7 +358,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 Log.e("AmapError", "location Error, ErrCode:"
                         + amapLocation.getErrorCode() + ", errInfo:"
                         + amapLocation.getErrorInfo());
-                Toast.makeText(getApplicationContext(), "定位似乎有些问题", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "定位似乎有些问题" + amapLocation.getErrorCode(), Toast.LENGTH_LONG).show();
             }
         }
 

@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.novo.zealot.Adapter.LogAdapter;
@@ -31,6 +32,8 @@ public class LogFragment extends Fragment {
     LogAdapter logAdapter;
     TextView tv_bestDistanceUnit;
     TickerView tv_bestDistance, tv_bestSpeed, tv_bestTime;
+
+    LinearLayout ll_noData;
 
     public LogFragment() {
     }
@@ -89,25 +92,31 @@ public class LogFragment extends Fragment {
         super.onResume();
         //获取所有数据
         List<RunRecord> records = GlobalUtil.getInstance().databaseHelper.queryRecord();
-        logAdapter = new LogAdapter(records);
-        rv_log.setAdapter(logAdapter);
 
-        //获取最远距离，最快速度，最长时间
-        //保留至个位
-        int bestDistance = (int) GlobalUtil.getInstance().databaseHelper.queryBestDistance();
-        if (bestDistance < 1000) {
-            tv_bestDistanceUnit.setText("米");
-            tv_bestDistance.setText(bestDistance + "");
-        } else {
-            //保留两位
-            int bestDistanceInKM = (bestDistance / 100)/10;
-            tv_bestDistance.setText(bestDistanceInKM+"");
+        if (records.size() != 0) {
+            ll_noData.setVisibility(LinearLayout.INVISIBLE);
+
+            logAdapter = new LogAdapter(records);
+            rv_log.setAdapter(logAdapter);
+
+            //获取最远距离，最快速度，最长时间
+            //保留至个位
+            int bestDistance = (int) GlobalUtil.getInstance().databaseHelper.queryBestDistance();
+            if (bestDistance < 1000) {
+                tv_bestDistanceUnit.setText("米");
+                tv_bestDistance.setText(bestDistance + "");
+            } else {
+                //保留两位
+                int bestDistanceInKM = (bestDistance / 100) / 10;
+                tv_bestDistance.setText(bestDistanceInKM + "");
+            }
+            double bestSpeed = ((int) (GlobalUtil.getInstance().databaseHelper.queryBestSpeed() * 100)) / 100;
+            String bestTime = DataUtil.getFormattedTime(GlobalUtil.getInstance().databaseHelper.queryBestTime());
+
+            tv_bestDistance.setText("" + bestDistance);
+            tv_bestSpeed.setText("" + bestSpeed);
+            tv_bestTime.setText(bestTime);
+
         }
-        double bestSpeed = ((int) (GlobalUtil.getInstance().databaseHelper.queryBestSpeed() * 100)) / 100;
-        String bestTime = DataUtil.getFormattedTime(GlobalUtil.getInstance().databaseHelper.queryBestTime());
-
-        tv_bestDistance.setText("" + bestDistance);
-        tv_bestSpeed.setText("" + bestSpeed);
-        tv_bestTime.setText(bestTime);
     }
 }
