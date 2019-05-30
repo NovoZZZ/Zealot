@@ -8,17 +8,17 @@ e-mail: novo.zou@hotmail.com
 
 
 截图：
-![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/1.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/1.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/2.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/2.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/3.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/3.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/4.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/5.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/6.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.jpg)
 
 更新日志：
 
