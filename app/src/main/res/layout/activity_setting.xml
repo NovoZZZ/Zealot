@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_setting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UI.Activity.SettingActivity"
+    android:background="@color/lightGrayBkg">
+    <TextView
+        android:id="@+id/title_setting"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="设置"
+        android:textColor="@color/lightWhiteFg"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:background="@color/lightDark"
+        android:elevation="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_setting"
+        android:layout_marginTop="10dp"
+        android:background="@color/lightWhiteFg"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/ll_deleteAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="清除所有数据"
+                android:layout_marginLeft="15dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

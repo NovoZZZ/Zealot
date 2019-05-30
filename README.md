@@ -1,6 +1,27 @@
 # Zealot
 运动记录/ 跑步记录
 
+e-mail: novo.zou@hotmail.com
+
+介绍：简易跑步记录软件，调用高德地图
+
+
+
+截图：
+![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/1.jpg)
+
+![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/2.jpg)
+
+![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/3.jpg)
+
+![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/4.jpg)
+
+![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/5.jpg)
+
+![界面](https://github.com/NovoZZZ/Zealot/app/src/main/screenshot/6.jpg)
+
+更新日志：
+
 2019年05月27日
 1. 添加ZealotDBOpenHelper类、RecordBean等
 
@@ -17,3 +38,8 @@
 4. 优化跑步页面，跑步页面可显示实时数据
 5. 跑步结束可显示结果
 6. 增加个人界面
+
+2019年05月30日
+1. 修复了一些BUG
+2. 添加了个人信息及头像
+3. 增加设置界面，调整布局

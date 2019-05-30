@@ -52,4 +52,7 @@ dependencies {
 
     //debug查看数据库
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
+
+    implementation 'com.github.HanHuoBin:BaseDialog:1.2.0'
+
 }

@@ -76,7 +76,7 @@ public class LogAdapter extends RecyclerView.Adapter<LogAdapter.RecordHolder> {
         }
 
         recordHolder.tv_recordStartTime.setText(DateUtil.getFormattedTime(record.getStartTime()));
-        recordHolder.tv_recordAvgSpeed.setText(String.valueOf((int)((record.getAvgSpeed()*100)/100)));
+        recordHolder.tv_recordAvgSpeed.setText(String.valueOf(((int)(record.getAvgSpeed()*100)/100.0)));
         recordHolder.tv_recordDuration.setText(DataUtil.getFormattedTime(record.getDuration()));
     }
 

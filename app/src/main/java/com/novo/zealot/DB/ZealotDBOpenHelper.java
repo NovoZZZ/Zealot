@@ -249,4 +249,13 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    /**
+     * 删除所有数据
+     */
+    public void deleteAllData(){
+        String sql = "delete from " + TABLE_NAME + " where 1 = 1 ";
+        SQLiteDatabase db = getReadableDatabase();
+        db.execSQL(sql);
+    }
+
 }

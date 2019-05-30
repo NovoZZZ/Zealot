@@ -36,7 +36,7 @@ public class RunResultActivity extends Activity {
         btn_resultFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(RunResultActivity.this, MainActivity.class));
+                finish();
             }
         });
 
@@ -70,7 +70,8 @@ public class RunResultActivity extends Activity {
         tv_resultStartTime.setText(DateUtil.getFormattedTime(startTime));
         tv_resultEndTime.setText(DateUtil.getFormattedTime(endTime));
         tv_resultDistance.setText(""+distance);
-        tv_resultSpeed.setText(""+(((avgSpeed*100))/100));
+        //保留两位小数
+        tv_resultSpeed.setText(""+(((int)(avgSpeed*100))/100.0));
         tv_resultDuration.setText(DataUtil.getFormattedTime(duration));
     }
 

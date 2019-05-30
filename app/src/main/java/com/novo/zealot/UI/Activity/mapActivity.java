@@ -76,6 +76,9 @@ public class mapActivity extends Activity implements AMapLocationListener,
     //
     boolean isNormalMap = true;
 
+    //等待两次位置变化 使位置更准确
+    int count = 2;
+
     //数据显示
     TextView tv_mapSpeed, tv_mapDuration, tv_mapUnit;
     TickerView tv_mapDistance;
@@ -164,7 +167,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
         //定位的小图标
         MyLocationStyle myLocationStyle = new MyLocationStyle();
         myLocationStyle.showMyLocation(true);
-        myLocationStyle.myLocationType(myLocationStyle.LOCATION_TYPE_MAP_ROTATE);
+        myLocationStyle.myLocationType(myLocationStyle.LOCATION_TYPE_LOCATION_ROTATE);
         aMap.setMyLocationStyle(myLocationStyle);
         // 开启定位
         initLoc();
@@ -234,93 +237,95 @@ public class mapActivity extends Activity implements AMapLocationListener,
     public void onLocationChanged(AMapLocation amapLocation) {
         if (amapLocation != null) {
             if (amapLocation.getErrorCode() == 0) {
-                Log.d(TAG, "location changed");
-                //定位成功回调信息，设置相关消息
-                amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见官方定位类型表
-                amapLocation.getAccuracy();//获取精度信息
-                amapLocation.getAddress();  // 地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
-                amapLocation.getCountry();  // 国家信息
-                amapLocation.getProvince();  // 省信息
-                amapLocation.getCity();  // 城市信息
-                amapLocation.getDistrict();  // 城区信息
-                amapLocation.getStreet();  // 街道信息
-                amapLocation.getStreetNum();  // 街道门牌号信息
-                amapLocation.getCityCode();  // 城市编码
-                amapLocation.getAdCode();//地区编码
-                amapLocation.getGpsAccuracyStatus();//GPS状态
+                //避免前两次定位不准
+                if (count-- < 0) {
+                    Log.d(TAG, "location changed");
+                    //定位成功回调信息，设置相关消息
+                    amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见官方定位类型表
+                    amapLocation.getAccuracy();//获取精度信息
+                    amapLocation.getAddress();  // 地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                    amapLocation.getCountry();  // 国家信息
+                    amapLocation.getProvince();  // 省信息
+                    amapLocation.getCity();  // 城市信息
+                    amapLocation.getDistrict();  // 城区信息
+                    amapLocation.getStreet();  // 街道信息
+                    amapLocation.getStreetNum();  // 街道门牌号信息
+                    amapLocation.getCityCode();  // 城市编码
+                    amapLocation.getAdCode();//地区编码
+                    amapLocation.getGpsAccuracyStatus();//GPS状态
 
-                float nowSpeed = amapLocation.getSpeed();//获取速度
+                    float nowSpeed = amapLocation.getSpeed();//获取速度
 
-                //计算平均速度，即 (当前速度+当前平均速度)/2
-                //若为第一次定位，则当前速度为平均速度
-                if (isFirstLoc) {
-                    avgSpeed = nowSpeed;
-                } else {
-                    avgSpeed = (avgSpeed + nowSpeed) / 2;
-                }
-
-                //如果不是第一次定位，则把上次定位信息传给lastLatLng
-                if (!isFirstLoc) {
-                    if ((int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng) < 100) {
-                        lastLatLng = nowLatLng;
+                    //计算平均速度，即 (当前速度+当前平均速度)/2
+                    //若为第一次定位，则当前速度为平均速度
+                    if (isFirstLoc) {
+                        avgSpeed = nowSpeed;
                     } else {
-                        //定位出现问题，如突然瞬移，则取消此次定位修改
-                        Toast.makeText(getApplicationContext()
-                                , "此次计算距离差异过大，取消此次修改"
-                                , Toast.LENGTH_SHORT).show();
-                        return;
+                        avgSpeed = (avgSpeed + nowSpeed) / 2;
                     }
-                }
-                double latitude = amapLocation.getLatitude();//获取纬度
-                double longitude = amapLocation.getLongitude();//获取经度
-                //新位置
-                nowLatLng = new LatLng(latitude, longitude);
 
-                //当前时间
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date date = new Date(amapLocation.getTime());
-                String locTime = df.format(date);//定位时间
+                    //如果不是第一次定位，则把上次定位信息传给lastLatLng
+                    if (!isFirstLoc) {
+                        if ((int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng) < 100) {
+                            lastLatLng = nowLatLng;
+                        } else {
+                            //定位出现问题，如突然瞬移，则取消此次定位修改
+                            Toast.makeText(getApplicationContext()
+                                    , "此次计算距离差异过大，取消此次修改"
+                                    , Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    double latitude = amapLocation.getLatitude();//获取纬度
+                    double longitude = amapLocation.getLongitude();//获取经度
+                    //新位置
+                    nowLatLng = new LatLng(latitude, longitude);
 
-                //路径添加当前位置
-                path.add(nowLatLng);
+                    //当前时间
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(amapLocation.getTime());
+                    String locTime = df.format(date);//定位时间
+
+                    //路径添加当前位置
+                    path.add(nowLatLng);
 
 
-                //绘制路径
-                Polyline polyline = aMap.addPolyline(
-                        new PolylineOptions()
-                                .addAll(path)
-                                .width(10)
-                                .color(Color.argb(255, 255, 0, 0)));
+                    //绘制路径
+                    Polyline polyline = aMap.addPolyline(
+                            new PolylineOptions()
+                                    .addAll(path)
+                                    .width(10)
+                                    .color(Color.argb(255, 255, 0, 0)));
 
 //                Toast.makeText(getApplicationContext(), locTime, Toast.LENGTH_SHORT).show();
 
 
-                //如果不是第一次定位，就计算距离
-                if (!isFirstLoc) {
-                    int tempDistance = (int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng);
+                    //如果不是第一次定位，就计算距离
+                    if (!isFirstLoc) {
+                        int tempDistance = (int) AMapUtils.calculateLineDistance(nowLatLng, lastLatLng);
 
-                    //获得持续秒数
-                    int duration = (int) (new Date().getTime() - startTime.getTime()) / 1000;
-                    //将持续秒数转化为HH:mm:ss并显示到控件
-                    tv_mapDuration.setText(DataUtil.getFormattedTime(duration));
+                        //获得持续秒数
+                        int duration = (int) (new Date().getTime() - startTime.getTime()) / 1000;
+                        //将持续秒数转化为HH:mm:ss并显示到控件
+                        tv_mapDuration.setText(DataUtil.getFormattedTime(duration));
 
-                    //计算总距离
-                    distanceThisTime += tempDistance;
-                    //将总距离显示到控件
-                    if (distanceThisTime > 1000){
-                        //若大于1000米，则显示公里数
-                        double showDisKM = distanceThisTime / 1000.0;
-                        tv_mapDistance.setText(showDisKM + "");
-                        tv_mapUnit.setText("公里");
-                    }else {
-                        tv_mapDistance.setText(distanceThisTime + "");
-                    }
-                    //显示速度
-                    if (nowSpeed == 0){
-                        tv_mapSpeed.setText("--.--");
-                    }else{
-                        tv_mapSpeed.setText(nowSpeed+"");
-                    }
+                        //计算总距离
+                        distanceThisTime += tempDistance;
+                        //将总距离显示到控件
+                        if (distanceThisTime > 1000) {
+                            //若大于1000米，则显示公里数
+                            double showDisKM = distanceThisTime / 1000.0;
+                            tv_mapDistance.setText(showDisKM + "");
+                            tv_mapUnit.setText("公里");
+                        } else {
+                            tv_mapDistance.setText(distanceThisTime + "");
+                        }
+                        //显示速度
+                        if (nowSpeed == 0) {
+                            tv_mapSpeed.setText("--.--");
+                        } else {
+                            tv_mapSpeed.setText(nowSpeed + "");
+                        }
 
 //                    Toast.makeText(getApplicationContext()
 //                            , "此次计算距离：" + tempDistance
@@ -328,24 +333,25 @@ public class mapActivity extends Activity implements AMapLocationListener,
 //                                    + " 速度：" + nowSpeed
 //                                    + "持续时间：" + testDuration
 //                            , Toast.LENGTH_SHORT).show();
-                }
+                    }
 
-                //将地图移动到定位点
-                aMap.moveCamera(CameraUpdateFactory.changeLatLng(nowLatLng));
-                //点击定位按钮 能够将地图的中心移动到定位点
-                mListener.onLocationChanged(amapLocation);
-                if (isFirstLoc) {
-                    //设置缩放级别
-                    aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
-                    aMap.moveCamera(CameraUpdateFactory.changeTilt(0));
-                    //获取定位信息
-                    StringBuilder buffer = new StringBuilder();
-                    buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince()
-                            + "" + amapLocation.getCity() + "" + amapLocation.getProvince()
-                            + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet()
-                            + "" + amapLocation.getStreetNum());
-                    Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
-                    isFirstLoc = false;
+                    //将地图移动到定位点
+                    aMap.moveCamera(CameraUpdateFactory.changeLatLng(nowLatLng));
+                    //点击定位按钮 能够将地图的中心移动到定位点
+                    mListener.onLocationChanged(amapLocation);
+                    if (isFirstLoc) {
+                        //设置缩放级别
+                        aMap.moveCamera(CameraUpdateFactory.zoomTo(18));
+                        aMap.moveCamera(CameraUpdateFactory.changeTilt(0));
+                        //获取定位信息
+                        StringBuilder buffer = new StringBuilder();
+                        buffer.append(amapLocation.getCountry() + "" + amapLocation.getProvince()
+                                + "" + amapLocation.getCity() + "" + amapLocation.getProvince()
+                                + "" + amapLocation.getDistrict() + "" + amapLocation.getStreet()
+                                + "" + amapLocation.getStreetNum());
+                        Toast.makeText(getApplicationContext(), buffer.toString(), Toast.LENGTH_LONG).show();
+                        isFirstLoc = false;
+                    }
                 }
             } else {
                 //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
@@ -355,6 +361,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 Toast.makeText(getApplicationContext(), "定位失败", Toast.LENGTH_LONG).show();
             }
         }
+
     }
 
     public void onPopupMenuClick(View v) {
