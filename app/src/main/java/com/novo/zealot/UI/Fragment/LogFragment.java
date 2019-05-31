@@ -57,6 +57,8 @@ public class LogFragment extends Fragment {
 
         rv_log.setLayoutManager(linearLayoutManager);
 
+        ll_noData = view.findViewById(R.id.ll_noData);
+
         DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
         rv_log.addItemDecoration(decoration);
 
