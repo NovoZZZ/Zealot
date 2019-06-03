@@ -11,7 +11,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +26,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import cn.qqtheme.framework.picker.NumberPicker;
+import cn.qqtheme.framework.picker.OptionPicker;
+
 public class firstUseActivity extends Activity {
 
     ImageButton ib_avatarFirstTime;
@@ -39,7 +41,7 @@ public class firstUseActivity extends Activity {
     //个人信息文件名
     String fileName = "personalData";
 
-    EditText et_name, et_age, et_height, et_weight;
+    TextView et_name, et_age, et_height, et_weight;
 
     Button btn_infoConfirm;
 
@@ -93,6 +95,60 @@ public class firstUseActivity extends Activity {
         et_age = findViewById(R.id.et_age);
         et_height = findViewById(R.id.et_height);
         et_weight = findViewById(R.id.et_weight);
+
+        et_age.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NumberPicker picker = new NumberPicker(firstUseActivity.this);
+                picker.setOffset(2);//偏移量
+                picker.setRange(10, 100);//数字范围
+                picker.setSelectedItem(20);
+                picker.setLabel("岁");
+                picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+                    @Override
+                    public void onOptionPicked(String option) {
+                        et_age.setText(option);
+                    }
+                });
+                picker.show();
+            }
+        });
+
+        et_height.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NumberPicker picker = new NumberPicker(firstUseActivity.this);
+                picker.setOffset(2);//偏移量
+                picker.setRange(145, 200);//数字范围
+                picker.setSelectedItem(170);
+                picker.setLabel("厘米");
+                picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+                    @Override
+                    public void onOptionPicked(String option) {
+                        et_height.setText(option);
+                    }
+                });
+                picker.show();
+            }
+        });
+
+        et_weight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NumberPicker picker = new NumberPicker(firstUseActivity.this);
+                picker.setOffset(2);//偏移量
+                picker.setRange(40, 200);//数字范围
+                picker.setSelectedItem(60);
+                picker.setLabel("公斤");
+                picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
+                    @Override
+                    public void onOptionPicked(String option) {
+                        et_weight.setText(option);
+                    }
+                });
+                picker.show();
+            }
+        });
     }
 
     /**

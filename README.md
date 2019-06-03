@@ -14,11 +14,17 @@ e-mail: novo.zou@hotmail.com
 
 ![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/3.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.jpg)
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.png)
 
 ![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.png)
 
 ![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.png)
+
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/7.png)
+
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/8.png)
+
+![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/9.png)
 
 更新日志：
 
@@ -44,3 +50,7 @@ e-mail: novo.zou@hotmail.com
 2. 添加了个人信息及头像
 3. 增加设置界面，调整布局
 4. 增加欢迎界面
+
+2019年06月3日
+1. 修复了一些BUG
+2. 修改了记录界面，增加了历史运动界面和运动图标界面，查看数据更直观

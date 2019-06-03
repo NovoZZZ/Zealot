@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/lightGrayBkg"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
     tools:context=".UI.Fragment.LogFragment">
 
@@ -21,7 +21,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:background="@color/lightWhiteFg"
         android:orientation="vertical">
 
@@ -222,43 +222,71 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
+    <!--查看历史记录-->
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/rl_log"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:background="@color/lightWhiteFg"
-        android:paddingLeft="15dp"
-        android:text="历史运动记录" />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_log"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/lightWhiteFg">
-
-        </android.support.v7.widget.RecyclerView>
-        <LinearLayout
-            android:id="@+id/ll_noData"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center_horizontal">
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:src="@drawable/icon_invisible_black_36dp" />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="暂无历史数据" />
-        </LinearLayout>
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center_vertical"
+        android:background="@color/lightWhiteFg">
+        <ImageView
+            android:id="@+id/iv_log"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/icon_log_activity_black_18dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_toRightOf="@+id/iv_log"
+            android:text="历史运动记录"
+            android:textSize="15sp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_arrow_right_black_18dp"/>
     </RelativeLayout>
+
+    <!--查看历史记录-->
+    <RelativeLayout
+        android:layout_marginTop="1dp"
+        android:id="@+id/rl_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:gravity="center_vertical"
+        android:background="@color/lightWhiteFg">
+        <ImageView
+            android:id="@+id/iv_stats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:src="@drawable/icon_chart_black_18dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_toRightOf="@+id/iv_stats"
+            android:text="运动图表"
+            android:textSize="15sp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/icon_arrow_right_black_18dp"/>
+    </RelativeLayout>
+
+
 
 
 </LinearLayout>

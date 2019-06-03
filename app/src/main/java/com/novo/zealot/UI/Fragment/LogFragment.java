@@ -4,36 +4,31 @@ package com.novo.zealot.UI.Fragment;
  * Created by Novo on 2019/5/28.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.novo.zealot.Adapter.LogAdapter;
-import com.novo.zealot.Bean.RunRecord;
 import com.novo.zealot.R;
+import com.novo.zealot.UI.Activity.ChartActivity;
+import com.novo.zealot.UI.Activity.LogActivity;
 import com.novo.zealot.Utils.DataUtil;
 import com.novo.zealot.Utils.GlobalUtil;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
 
-import java.util.List;
-
 public class LogFragment extends Fragment {
     public static final String TAG = "LogFragment";
 
-    RecyclerView rv_log;
-    LogAdapter logAdapter;
+
     TextView tv_bestDistanceUnit;
     TickerView tv_bestDistance, tv_bestSpeed, tv_bestTime;
 
-    LinearLayout ll_noData;
+    RelativeLayout rl_log, rl_chart;
 
     public LogFragment() {
     }
@@ -50,17 +45,27 @@ public class LogFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_log, container, false);
 
-        rv_log = view.findViewById(R.id.rv_log);
+        //查看历史记录
+        rl_log = view.findViewById(R.id.rl_log);
+        rl_log.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), LogActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        rv_log.setLayoutManager(linearLayoutManager);
-
-        ll_noData = view.findViewById(R.id.ll_noData);
-
-        DividerItemDecoration decoration = new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
-        rv_log.addItemDecoration(decoration);
+        //查看图表
+        rl_chart = view.findViewById(R.id.rl_chart);
+        rl_chart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChartActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        });
 
         //最远距离单位
         tv_bestDistanceUnit = view.findViewById(R.id.tv_bestDistanceUnit);
@@ -92,33 +97,23 @@ public class LogFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //获取所有数据
-        List<RunRecord> records = GlobalUtil.getInstance().databaseHelper.queryRecord();
-
-        if (records.size() != 0) {
-            ll_noData.setVisibility(LinearLayout.INVISIBLE);
-
-            logAdapter = new LogAdapter(records);
-            rv_log.setAdapter(logAdapter);
-
-            //获取最远距离，最快速度，最长时间
-            //保留至个位
-            int bestDistance = (int) GlobalUtil.getInstance().databaseHelper.queryBestDistance();
-            if (bestDistance < 1000) {
-                tv_bestDistanceUnit.setText("米");
-                tv_bestDistance.setText(bestDistance + "");
-            } else {
-                //保留两位
-                int bestDistanceInKM = (bestDistance / 100) / 10;
-                tv_bestDistance.setText(bestDistanceInKM + "");
-            }
-            double bestSpeed = ((int) (GlobalUtil.getInstance().databaseHelper.queryBestSpeed() * 100)) / 100;
-            String bestTime = DataUtil.getFormattedTime(GlobalUtil.getInstance().databaseHelper.queryBestTime());
-
-            tv_bestDistance.setText("" + bestDistance);
-            tv_bestSpeed.setText("" + bestSpeed);
-            tv_bestTime.setText(bestTime);
-
+        //获取最远距离，最快速度，最长时间
+        //保留至个位
+        int bestDistance = (int) GlobalUtil.getInstance().databaseHelper.queryBestDistance();
+        if (bestDistance < 1000) {
+            tv_bestDistanceUnit.setText("米");
+            tv_bestDistance.setText(bestDistance + "");
+        } else {
+            //保留两位
+            int bestDistanceInKM = (bestDistance / 100) / 10;
+            tv_bestDistance.setText(bestDistanceInKM + "");
         }
+        double bestSpeed = ((int) (GlobalUtil.getInstance().databaseHelper.queryBestSpeed() * 100)) / 100.0;
+        String bestTime = DataUtil.getFormattedTime(GlobalUtil.getInstance().databaseHelper.queryBestTime());
+
+        tv_bestDistance.setText("" + bestDistance);
+        tv_bestSpeed.setText("" + bestSpeed);
+        tv_bestTime.setText(bestTime);
+
     }
 }

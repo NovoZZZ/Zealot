@@ -7,7 +7,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1
-        versionName "1.2"
+        versionName "1.3"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         vectorDrawables.useSupportLibrary = true
@@ -56,6 +56,12 @@ dependencies {
     //弹窗
     implementation 'com.github.HanHuoBin:BaseDialog:1.2.0'
 
-    //滚轮选择
-    implementation 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
+    //wheelPicker
+    implementation 'cn.qqtheme.framework:WheelPicker:1.1.2'
+
+    //QMUI
+    implementation 'com.qmuiteam:qmui:1.2.0'
+
+    //Chart
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

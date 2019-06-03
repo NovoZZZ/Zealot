@@ -28,7 +28,9 @@
         android:roundIcon="@mipmap/icon_zealot_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UI.Activity.firstUseActivity"></activity>
+        <activity android:name=".UI.Activity.ChartActivity"></activity>
+        <activity android:name=".UI.Activity.LogActivity" />
+        <activity android:name=".UI.Activity.firstUseActivity" />
         <activity android:name=".UI.Activity.AboutActivity" />
         <activity android:name=".UI.Activity.SettingActivity" />
         <activity android:name=".UI.Activity.RunResultActivity" />
@@ -45,9 +47,15 @@
             </intent-filter>
         </activity>
 
+        <!--打包时使用此key-->
+        <!-- <meta-data -->
+        <!-- android:name="com.amap.api.v2.apikey" -->
+        <!-- android:value="46ecbef533db704dc247a71d18de96b5" /> -->
+
+        <!-- debug时使用此key -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="46ecbef533db704dc247a71d18de96b5" />
+            android:value="40c16b4ef7c810d9a0ef940d29b97ed2" />
 
         <activity android:name=".UI.Activity.mapActivity" />
 

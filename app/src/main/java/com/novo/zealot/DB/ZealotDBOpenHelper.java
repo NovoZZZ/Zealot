@@ -11,11 +11,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.novo.zealot.Bean.DayRecord;
 import com.novo.zealot.Bean.RunRecord;
 import com.novo.zealot.Utils.DateUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 public class ZealotDBOpenHelper extends SQLiteOpenHelper {
@@ -197,9 +200,10 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * 查询跑步总距离
+     *
      * @return sum of running distance
      */
-    public int queryAllDistance(){
+    public int queryAllDistance() {
         String sql = "select sum(distance) from " + TABLE_NAME;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
@@ -215,9 +219,10 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * 查询跑步总天数
+     *
      * @return number of running days
      */
-    public int queryNumOfDays(){
+    public int queryNumOfDays() {
         String sql = "select count(date) from " + TABLE_NAME + " group by date";
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
@@ -233,9 +238,10 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * 查询跑步总次数
+     *
      * @return number of running times
      */
-    public int queryNumOfTimes(){
+    public int queryNumOfTimes() {
         String sql = "select count(*) from " + TABLE_NAME;
         SQLiteDatabase db = getReadableDatabase();
         Cursor cursor = db.rawQuery(sql, null);
@@ -252,10 +258,64 @@ public class ZealotDBOpenHelper extends SQLiteOpenHelper {
     /**
      * 删除所有数据
      */
-    public void deleteAllData(){
+    public void deleteAllData() {
         String sql = "delete from " + TABLE_NAME + " where 1 = 1 ";
         SQLiteDatabase db = getReadableDatabase();
         db.execSQL(sql);
+    }
+
+
+    /**
+     * 返回待查询月份每天的运动距离
+     *
+     * @param year  待查年份
+     * @param month 待查月份
+     * @return A List of DayRecord
+     */
+    public List<DayRecord> queryDayRecord(String year, String month) {
+        /**
+         * 数据一定要按X轴升序排，否则图标会崩溃
+         */
+        String sql = "select distinct date from " + TABLE_NAME
+                + " where substr(date(date),1,7) = ? order by date asc";
+
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery(sql, new String[]{year + "-" + month});
+
+        Log.d(TAG, "cursor size: " + cursor.getCount());
+
+        List<DayRecord> result = new LinkedList<>();
+        if (cursor != null && cursor.getCount() > 0) {
+            while (cursor.moveToNext()) {
+                String tempDate = cursor.getString(0);
+                List<RunRecord> dayList = queryRecord(tempDate);
+
+                Log.d(TAG, "dayList size: " + dayList.size());
+                //得到日
+                Date date = DateUtil.strToDate(tempDate);
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                float day = (float) calendar.get(Calendar.DATE);
+                Log.d(TAG, "day : " + day);
+
+                //得到总距离
+                float allDistance = 0;
+                for (RunRecord record :
+                        dayList) {
+                    allDistance += record.getDistance();
+                }
+                DayRecord dayRecord = new DayRecord();
+                dayRecord.setDay(day);
+                dayRecord.setDistance(allDistance);
+                result.add(dayRecord);
+            }
+        }
+        cursor.close();
+        Log.d(TAG, "SQL : " + sql);
+        Log.d(TAG, "year + month : " + year + month);
+        Log.d(TAG, "result size: " + result.size());
+        return result;
+
     }
 
 }

@@ -29,7 +29,6 @@ import android.widget.Toast;
 import com.hb.dialog.myDialog.MyAlertInputDialog;
 import com.novo.zealot.R;
 import com.novo.zealot.UI.Activity.SettingActivity;
-import com.novo.zealot.Utils.DataUtil;
 import com.novo.zealot.Utils.GlobalUtil;
 import com.robinhood.ticker.TickerUtils;
 import com.robinhood.ticker.TickerView;
@@ -44,6 +43,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+
+import cn.qqtheme.framework.picker.NumberPicker;
+import cn.qqtheme.framework.picker.OptionPicker;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -159,30 +161,18 @@ public class ProfileFragment extends Fragment {
         ib_editAge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final MyAlertInputDialog myAlertInputDialog = new MyAlertInputDialog(view.getContext()).builder()
-                        .setTitle("请输入")
-                        .setEditText("");
-                myAlertInputDialog.setPositiveButton("确认", new View.OnClickListener() {
+                NumberPicker picker = new NumberPicker(getActivity());
+                picker.setOffset(2);//偏移量
+                picker.setRange(10, 100);//数字范围
+                picker.setSelectedItem(20);
+                picker.setLabel("岁");
+                picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
                     @Override
-                    public void onClick(View v) {
-                        String age = myAlertInputDialog.getResult();
-                        if (age.length() == 0) {
-                            Toast.makeText(view.getContext(), "年龄不能为空!", Toast.LENGTH_SHORT).show();
-                        } else if (!DataUtil.isNumeric(age) || Integer.parseInt(age) < 0 || Integer.parseInt(age) > 100) {
-                            Toast.makeText(view.getContext(), "输入有误!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            tv_age.setText(age);
-                            Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                        }
-                        myAlertInputDialog.dismiss();
-                    }
-                }).setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myAlertInputDialog.dismiss();
+                    public void onOptionPicked(String option) {
+                        tv_age.setText(option);
                     }
                 });
-                myAlertInputDialog.show();
+                picker.show();
             }
         });
 
@@ -191,30 +181,18 @@ public class ProfileFragment extends Fragment {
         ib_editHeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final MyAlertInputDialog myAlertInputDialog = new MyAlertInputDialog(view.getContext()).builder()
-                        .setTitle("请输入")
-                        .setEditText("");
-                myAlertInputDialog.setPositiveButton("确认", new View.OnClickListener() {
+                NumberPicker picker = new NumberPicker(getActivity());
+                picker.setOffset(2);//偏移量
+                picker.setRange(145, 200);//数字范围
+                picker.setSelectedItem(170);
+                picker.setLabel("厘米");
+                picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
                     @Override
-                    public void onClick(View v) {
-                        String height = myAlertInputDialog.getResult();
-                        if (height.length() == 0) {
-                            Toast.makeText(view.getContext(), "身高不能为空!", Toast.LENGTH_SHORT).show();
-                        } else if (!DataUtil.isNumeric(height) || Integer.parseInt(height) < 0 || Integer.parseInt(height) > 100) {
-                            Toast.makeText(view.getContext(), "输入有误!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            tv_height.setText(height);
-                            Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                        }
-                        myAlertInputDialog.dismiss();
-                    }
-                }).setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myAlertInputDialog.dismiss();
+                    public void onOptionPicked(String option) {
+                        tv_height.setText(option);
                     }
                 });
-                myAlertInputDialog.show();
+                picker.show();
             }
         });
 
@@ -223,30 +201,18 @@ public class ProfileFragment extends Fragment {
         ib_editWeight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final MyAlertInputDialog myAlertInputDialog = new MyAlertInputDialog(view.getContext()).builder()
-                        .setTitle("请输入")
-                        .setEditText("");
-                myAlertInputDialog.setPositiveButton("确认", new View.OnClickListener() {
+                NumberPicker picker = new NumberPicker(getActivity());
+                picker.setOffset(2);//偏移量
+                picker.setRange(40, 200);//数字范围
+                picker.setSelectedItem(60);
+                picker.setLabel("公斤");
+                picker.setOnOptionPickListener(new OptionPicker.OnOptionPickListener() {
                     @Override
-                    public void onClick(View v) {
-                        String weight = myAlertInputDialog.getResult();
-                        if (weight.length() == 0) {
-                            Toast.makeText(view.getContext(), "体重不能为空!", Toast.LENGTH_SHORT).show();
-                        } else if (!DataUtil.isNumeric(weight) || Integer.parseInt(weight) < 0 || Integer.parseInt(weight) > 100) {
-                            Toast.makeText(view.getContext(), "输入有误!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            tv_weight.setText(weight);
-                            Toast.makeText(view.getContext(), "修改成功", Toast.LENGTH_SHORT).show();
-                        }
-                        myAlertInputDialog.dismiss();
-                    }
-                }).setNegativeButton("取消", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        myAlertInputDialog.dismiss();
+                    public void onOptionPicked(String option) {
+                        tv_weight.setText(option);
                     }
                 });
-                myAlertInputDialog.show();
+                picker.show();
             }
         });
 

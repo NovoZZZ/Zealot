@@ -60,12 +60,14 @@
             android:layout_height="wrap_content"
             android:text="年龄："
             android:textSize="20sp"/>
-        <EditText
+        <TextView
             android:id="@+id/et_age"
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:background="@color/lightGrayBkg"
+            android:text="20"/>
     </LinearLayout>
 
     <LinearLayout
@@ -80,17 +82,19 @@
             android:layout_height="wrap_content"
             android:text="身高："
             android:textSize="20sp"/>
-        <EditText
+        <TextView
             android:id="@+id/et_height"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:background="@color/lightGrayBkg"
+            android:text="170"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="厘米"
-            android:textSize="15sp"/>
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -105,12 +109,14 @@
             android:layout_height="wrap_content"
             android:text="体重："
             android:textSize="20sp"/>
-        <EditText
+        <TextView
             android:id="@+id/et_weight"
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:background="@color/lightGrayBkg"
+            android:text="60"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -358,7 +358,7 @@ public class mapActivity extends Activity implements AMapLocationListener,
                 Log.e("AmapError", "location Error, ErrCode:"
                         + amapLocation.getErrorCode() + ", errInfo:"
                         + amapLocation.getErrorInfo());
-                Toast.makeText(getApplicationContext(), "定位似乎有些问题" + amapLocation.getErrorCode(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "定位似乎有些问题 Error: " + amapLocation.getErrorCode(), Toast.LENGTH_LONG).show();
             }
         }
 
