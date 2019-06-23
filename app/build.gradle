@@ -39,29 +39,21 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-
-
     implementation files('libs/Android_Map3D_SDK_V6.8.0_20190401.jar')
     //定位功能
     implementation 'com.amap.api:location:latest.integration'
     //搜索功能
     implementation 'com.amap.api:search:latest.integration'
-
     //数据动态显示
     implementation 'com.robinhood.ticker:ticker:2.0.1'
-
     //debug查看数据库
     debugImplementation 'com.amitshekhar.android:debug-db:1.0.0'
-
     //弹窗
     implementation 'com.github.HanHuoBin:BaseDialog:1.2.0'
-
     //wheelPicker
     implementation 'cn.qqtheme.framework:WheelPicker:1.1.2'
-
     //QMUI
     implementation 'com.qmuiteam:qmui:1.2.0'
-
     //Chart
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }

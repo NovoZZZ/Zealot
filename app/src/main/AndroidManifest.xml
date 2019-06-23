@@ -38,7 +38,7 @@
         <activity
             android:name=".UI.Activity.MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
@@ -48,14 +48,14 @@
         </activity>
 
         <!--打包时使用此key-->
-        <!-- <meta-data -->
-        <!-- android:name="com.amap.api.v2.apikey" -->
-        <!-- android:value="46ecbef533db704dc247a71d18de96b5" /> -->
+         <meta-data
+         android:name="com.amap.api.v2.apikey"
+         android:value="46ecbef533db704dc247a71d18de96b5" />
 
         <!-- debug时使用此key -->
-        <meta-data
-            android:name="com.amap.api.v2.apikey"
-            android:value="40c16b4ef7c810d9a0ef940d29b97ed2" />
+        <!--<meta-data-->
+            <!--android:name="com.amap.api.v2.apikey"-->
+            <!--android:value="40c16b4ef7c810d9a0ef940d29b97ed2" />-->
 
         <activity android:name=".UI.Activity.mapActivity" />
 
