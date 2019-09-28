@@ -50,12 +50,13 @@
         <!--打包时使用此key-->
          <meta-data
          android:name="com.amap.api.v2.apikey"
-         android:value="46ecbef533db704dc247a71d18de96b5" />
-
+         android:value="*******************" />
+        <!-- 使用自己申请的key -->
+        
         <!-- debug时使用此key -->
         <!--<meta-data-->
             <!--android:name="com.amap.api.v2.apikey"-->
-            <!--android:value="40c16b4ef7c810d9a0ef940d29b97ed2" />-->
+            <!--android:value="**********************" />-->
 
         <activity android:name=".UI.Activity.mapActivity" />
 
