@@ -1,30 +1,27 @@
 # Zealot
 运动记录/ 跑步记录
 
-e-mail: novo.zou@hotmail.com
-
 介绍：简易跑步记录软件，调用高德地图
 
-
-
 截图：
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/1.jpg)
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/2.jpg)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/1.jpg"/></div>
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/3.jpg)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/2.jpg"/></div>
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.png)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/3.jpg"/></div>
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.png)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.jpg"/></div>
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.png)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.jpg"/></div>
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/7.png)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.jpg"/></div>
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/8.png)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/7.jpg"/></div>
 
-![界面](https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/9.png)
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/8.jpg"/></div>
+
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/9.jpg"/></div>
 
 更新日志：
 
