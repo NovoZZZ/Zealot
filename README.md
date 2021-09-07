@@ -11,17 +11,17 @@
 
 <div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/3.jpg"/></div>
 
-<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.jpg"/></div>
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/4.png"/></div>
 
-<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.jpg"/></div>
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/5.png"/></div>
 
-<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.jpg"/></div>
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/6.png"/></div>
 
-<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/7.jpg"/></div>
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/7.png"/></div>
 
-<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/8.jpg"/></div>
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/8.png"/></div>
 
-<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/9.jpg"/></div>
+<div align=center><img width="300" height="533" src="https://github.com/NovoZZZ/Zealot/blob/master/app/src/main/screenshot/9.png"/></div>
 
 更新日志：
 
